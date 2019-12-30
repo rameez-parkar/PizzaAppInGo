@@ -12,45 +12,53 @@ import (
 var Pizza Models.Pizza
 
 func SelectBase() {
-	fmt.Print("Your Base choice : ")
-	var baseChoice int
-	fmt.Scanf("%d\n", &baseChoice)
-	base := ValidateBaseInput(baseChoice)
-	if (base != Models.Base{}) {
-		Pizza.Base = base
+	for {
+		fmt.Print("Your Base choice : ")
+		var baseChoice int
+		fmt.Scanf("%d\n", &baseChoice)
+		base := ValidateBaseInput(baseChoice)
+
+		if (base != Models.Base{}) {
+			Pizza.Base = base
+			break
+		}
 	}
 }
 
 func SelectSize() {
-	fmt.Print("Your Size choice : ")
-	var sizeChoice string
-	fmt.Scanln(&sizeChoice)
-	sizeChoice = strings.ToUpper(sizeChoice)
-	size := ValidateSizeInput(sizeChoice)
-	if (size != Models.Size{}) {
-		Pizza.Size = size
+	for {
+		fmt.Print("Your Size choice : ")
+		var sizeChoice string
+		fmt.Scanln(&sizeChoice)
+		sizeChoice = strings.ToUpper(sizeChoice)
+		size := ValidateSizeInput(sizeChoice)
+		if (size != Models.Size{}) {
+			Pizza.Size = size
+			break
+		}
 	}
 }
 
 func SelectToppings() {
-	reader := bufio.NewReader(os.Stdin)
-	fmt.Print("Your Toppings choice : ")
-	var toppingsChoiceInput string
-	toppingsChoiceInput, _ = reader.ReadString('\n')
-	toppingsChoiceInput = strings.ReplaceAll(toppingsChoiceInput, " ", "")
-	toppingsChoiceInput = strings.TrimSuffix(toppingsChoiceInput, "\n")
-	fmt.Println(toppingsChoiceInput)
-	toppingsChoiceString := strings.Split(toppingsChoiceInput, ",")
-	fmt.Println(toppingsChoiceString)
-	var toppingsChoice = make([]int, len(toppingsChoiceString))
-	for i := 0; i < len(toppingsChoiceString); i++ {
-		value, _ := strconv.Atoi(toppingsChoiceString[i])
-		toppingsChoice[i] = value
-		fmt.Println(toppingsChoice)
+	for {
+		reader := bufio.NewReader(os.Stdin)
+		fmt.Print("Your Toppings choice : ")
+		var toppingsChoiceInput string
+		toppingsChoiceInput, _ = reader.ReadString('\n')
+		toppingsChoiceInput = strings.ReplaceAll(toppingsChoiceInput, " ", "")
+		toppingsChoiceInput = strings.TrimSuffix(toppingsChoiceInput, "\n")
+		toppingsChoiceString := strings.Split(toppingsChoiceInput, ",")
+		var toppingsChoice = make([]int, len(toppingsChoiceString))
+		for i := 0; i < len(toppingsChoiceString); i++ {
+			value, _ := strconv.Atoi(toppingsChoiceString[i])
+			toppingsChoice[i] = value
+		}
+		toppings := ValidateToppingsInput(toppingsChoice)
+		if len(toppings) > 0 {
+			Pizza.Toppings = toppings
+			break
+		}
 	}
-	toppings := ValidateToppingsInput(toppingsChoice)
-	fmt.Println(toppings)
-	Pizza.Toppings = toppings
 }
 
 func CalculatePizzaPrice() {
