@@ -4,6 +4,7 @@ import (
 	"Models"
 	"fmt"
 	"math/rand"
+	"net/http"
 	"strconv"
 	"time"
 )
@@ -25,5 +26,10 @@ func ConfirmOrder() {
 	fmt.Println(Order.Time)
 	DisplayCartPizzas()
 	fmt.Println("--------------------------------------------")
+	http.HandleFunc("/", HostOrder)
+	http.ListenAndServe(":9080", nil)
+}
 
+func HostOrder(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "Hello World")
 }

@@ -9,7 +9,7 @@ import (
 )
 
 func GetMenu() Models.Menu {
-	res, err := http.Get("https://demo6059093.mockable.io/pizzaapp")
+	res, err := http.Get("http://localhost:9191/menu")
 	if err != nil {
 		log.Fatal(err)
 	}
